@@ -8,6 +8,8 @@ const BaseError = require('./errors/base.error');
 const errorHandler = require('./utils/errorHandler');
 const connectToDB = require('./config/db.config');
 
+const Problem = require('./models/problem.model');
+
 
 const app = express();
 app.use(bodyParser.json());
@@ -32,4 +34,6 @@ app.listen(PORT, async() => {
 
     await connectToDB();
     console.log("Database connected");
+
+    
 })
