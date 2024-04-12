@@ -3,6 +3,7 @@ const NotImplemented = require('../errors/notImplemented.error');
 const BadRequest = require('../errors/badrequest.error');
 const { ProblemService } = require('../services')
 const { ProblemRepository } = require('../repositories');
+const NotFound = require('../errors/notFound.error');
 
 
 const problemService = new ProblemService(new ProblemRepository());
@@ -26,15 +27,22 @@ async function addProblem(req, res, next) {
     }
 };
 
-async function getProblem(req, res) {
+async function getProblem(req, res, next) {
     try {
+        const problem = await problemService.getProblem(req.params.id);
         
+        return res.status(StatusCodes.OK).json({
+            success: true,
+            message: "Problem fetched successfully",
+            error: {},
+            data: problem
+        })
     } catch (error) {
         next(error);
     }
 }
 
-async function getProblems(req, res) {
+async function getProblems(req, res, next) {
     try {
         const response = await problemService.getAllProblems();
         return res.status(StatusCodes.OK).json({
