@@ -4,6 +4,11 @@ const bodyParser = require('body-parser');
 
 const { PORT } = require('./config/server.config');
 const apiRouter = require('./routes');
+const BaseError = require('./errors/base.error');
+const errorHandler = require('./utils/errorHandler');
+const connectToDB = require('./config/db.config');
+
+const Problem = require('./models/problem.model');
 
 
 const app = express();
@@ -19,8 +24,16 @@ app.use('/api', apiRouter);
 
 app.get('/ping', (req, res) => {
     return res.json({message: 'Problem service is alive'})
-})
+});
 
-app.listen(PORT, () => {
+// Last middleware if any error comes
+app.use(errorHandler);
+
+app.listen(PORT, async() => {
     console.log('Server started at PORT', PORT);
+
+    await connectToDB();
+    console.log("Database connected");
+
+    
 })
