@@ -14,7 +14,6 @@ function pingProblemController(req, res) {
 
 async function addProblem(req, res, next) {
     try {
-        console.log("Incoming req.body", req.body);
         const newProblem = await problemService.createProblem(req.body);
         return res.status(StatusCodes.CREATED).json({
             success: true,
@@ -56,16 +55,23 @@ async function getProblems(req, res, next) {
     }
 }
 
-function deleteProblem(req, res) {
+async function deleteProblem(req, res, next) {
     try {
-        // nothing implemented
-        throw new NotImplemented('Add Problem');
+        
+        const deletedProblem = await problemService.deleteProblem(req.params.id);
+       
+        return res.status(StatusCodes.OK).json({
+            success: true,
+            message: "Successfully deleted the problems",
+            error: {},
+            data: deletedProblem
+        })
     } catch (error) {
         next(error);
     }
 }
 
-function updateProblem(req, res) {
+function updateProblem(req, res, next) {
     try {
         // nothing implemented
         throw new NotImplemented('Add Problem');
