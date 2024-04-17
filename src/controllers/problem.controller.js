@@ -71,10 +71,15 @@ async function deleteProblem(req, res, next) {
     }
 }
 
-function updateProblem(req, res, next) {
+async function updateProblem(req, res, next) {
     try {
-        // nothing implemented
-        throw new NotImplemented('Add Problem');
+        const updateProblem = await problemService.updateProblem(req.params.id, req.body);
+        return res.status(StatusCodes.OK).json({
+            success: true,
+            message: "Successfully updated the problem",
+            error: {},
+            data: updateProblem,
+        })
     } catch (error) {
         next(error);
     }

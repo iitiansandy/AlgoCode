@@ -49,7 +49,12 @@ class ProblemService {
             console.log(error);
             throw error;
         }
-    }
+    };
+
+    async updateProblem(problemId) {
+        let problem = await this.problemRepository.updateProblem(problemId);
+        return problem;
+    };
 
 
 };
