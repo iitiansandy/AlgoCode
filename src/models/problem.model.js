@@ -30,6 +30,15 @@ const problemSchema = new mongoose.Schema({
         }
     }],
 
+    codeStubs: [
+        {
+            language: { type: String },
+            startSnippet: { type: String },
+            endSnippet: { type: String },
+            userSnippet: { type: String }
+        }
+    ],
+
     editorial: {
         type: String,
     }
